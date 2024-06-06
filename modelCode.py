@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 
 df_train = pd.read_csv(r"D:\Downloads\nba_stats_final.csv")
 
-#Removing unnecessary values
+# Removing unnecessary values
 df_train = df_train.drop(['PLAYER_ID', 'SEASON_ID', 'LEAGUE_ID', 'TEAM_ABBREVIATION', 'PLAYER_AGE', 'GS', 'MIN', 'FGA', 'FTM', 'FG3A','FTA', 'FT_PCT', 'OREB', 'DREB', 'PF'], axis = 1)
 
-#Standardizing Values
+# Standardizing Values
 gp_mean = df_train['GP'].mean()
 gp_std = df_train['GP'].std()
 df_train['GP'] = (df_train['GP'] - gp_mean)/gp_std
@@ -45,7 +45,7 @@ pts_mean = df_train['PTS'].mean()
 pts_std = df_train['PTS'].std()
 df_train['PTS'] = (df_train['PTS'] - pts_mean)/pts_std
 
-#remove name, Tm, variable, Pos
+# Remove name, Tm, variable, Pos
 columns_to_remove = ['Unnamed: 0', 'name', 'TEAM_ID', 'Tm', 'variable', 'Pos']
 # Drop the specified columns
 df_train.drop(columns_to_remove, axis=1, inplace=True)
@@ -54,7 +54,7 @@ df_train.drop(columns_to_remove, axis=1, inplace=True)
 df_train['position'] = df_train['position'].astype(str)
 df_train = pd.get_dummies(df_train, columns=['position'], prefix='position', dtype = 'int')
 
-#Creating train and test sets
+# Creating train and test sets
 X_train = df_train.drop('AllStar', axis=1).to_numpy()
 Y_train = df_train['AllStar'].astype('float32').to_numpy()
 X_train, X_test, y_train, y_test = train_test_split(X_train, Y_train, test_size=0.3, random_state = 42)
@@ -70,7 +70,7 @@ def build_model(input_shape):
 input_shape = X_train[0].shape
 model = build_model(input_shape)
 
-#Compile the model
+# Compile the model
 model.compile(optimizer='sgd',
               loss='binary_crossentropy',
               metrics=['accuracy'])
