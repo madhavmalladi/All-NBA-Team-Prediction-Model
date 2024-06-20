@@ -55,8 +55,8 @@ df_train['position'] = df_train['position'].astype(str)
 df_train = pd.get_dummies(df_train, columns=['position'], prefix='position', dtype = 'int')
 
 # Creating train and test sets
-X_train = df_train.drop('AllStar', axis=1).to_numpy()
-Y_train = df_train['AllStar'].astype('float32').to_numpy()
+X_train = df_train.drop('AllNBA', axis=1).to_numpy()
+Y_train = df_train['AllNBA'].astype('float32').to_numpy()
 X_train, X_test, y_train, y_test = train_test_split(X_train, Y_train, test_size=0.3, random_state = 42)
 
 def build_model(input_shape):
